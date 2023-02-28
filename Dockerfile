@@ -43,7 +43,7 @@ RUN conda install -c anaconda pip
 RUN mkdir /content && mkdir /outputs
 WORKDIR /content
 
-RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui && cd stable-diffusion-webui && \
+RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui && cd stable-diffusion-webui && git reset --hard ea9bd9fc7409109adcd61b897abc2c8881161256 && \
   pip install -r requirements.txt
 
 RUN pip uninstall -y pillow pillow-simd && CC="cc -mavx2" pip install -U --force-reinstall pillow-simd
