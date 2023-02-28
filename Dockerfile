@@ -8,7 +8,7 @@ RUN ln -fs /usr/share/zoneinfo/US/Central /etc/localtime
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-  apt-get -y install \
+  apt-get -y --no-upgrade install \
     ca-certificates \
     cmake \
     curl \
@@ -31,6 +31,7 @@ RUN apt-get update && \
     unzip \
     w3m \
     wget \
+	jq \
     xdg-utils && \
   apt-get clean all
 
@@ -56,6 +57,13 @@ COPY localtunnel_info.py /content
 
 ## Print some info about the install
 RUN echo "Python VERSION" && echo "----------" && python --version
+
+
+RUN wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb && dpkg -i packages-microsoft-prod.deb && rm packages-microsoft-prod.deb
+RUN apt-get update && apt-get install -y --no-upgrade dotnet-sdk-6.0
+
+RUN git clone https://github.com/Decentramind-io/sd-proxy.git /sd-proxy-src
+RUN dotnet publish /sd-proxy-src/sd-proxy.csproj --sc false  -c Release -r ubuntu.20.04-x64 -o /sd-proxy && rm -rf /sd-proxy-src
 
 # any changes of flags go into runme.sh
 COPY runme.sh /

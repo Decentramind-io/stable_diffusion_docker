@@ -1,5 +1,10 @@
 #! /bin/bash
 
+UNB64=$(echo $BASE64_ARGS_VAR | base64 --decode)
+LISTEN_PORT=$(jq -r '.listen_port' <<< $UNB64)
+
+dotnet /sd-proxy/sd-proxy.dll listen-port=$LISTEN_PORT &
+
 cd /content/stable-diffusion-webui/
 
 if [[ -n "${LT}" ]]; then
