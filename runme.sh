@@ -33,6 +33,9 @@ cd /content/stable-diffusion-webui/models/ && \
 wget -nc https://huggingface.co/Daswer123/gfdsa/resolve/main/hypernetworks.zip -O /content/stable-diffusion-webui/models/hypernetworks.zip && \
 cd /content/stable-diffusion-webui/models && unzip -n hypernetworks.zip
 
+#https://github.com/AUTOMATIC1111/stable-diffusion-webui/issues/7714
+pip install --upgrade fastapi==0.90
+
 # available params found here: https://github.com/sd-webui/stable-diffusion-webui/wiki/Command-line-options#list-of-command-line-options
 # enable huge image generation
 cd /content/stable-diffusion-webui && python3 launch.py --opt-split-attention --enable-insecure-extension-access --listen
